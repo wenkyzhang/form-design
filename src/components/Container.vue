@@ -83,7 +83,7 @@
           </el-container>
           
         </el-aside>
-
+    <!-- 预览对话框 -->
         <cus-dialog
           :visible="previewVisible"
           @on-close="previewVisible = false"
@@ -100,7 +100,7 @@
             </template>
           </generate-form>
         </cus-dialog>
-
+    <!-- 导入JSON -->
         <cus-dialog
           :visible="uploadVisible"
           @on-close="uploadVisible = false"
@@ -112,7 +112,7 @@
           <el-alert type="info" title="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"></el-alert>
           <div id="uploadeditor" style="height: 400px;width: 100%;">{{jsonEg}}</div>
         </cus-dialog>
-
+    <!-- 生成JSON对话框 -->
         <cus-dialog
           :visible="jsonVisible"
           @on-close="jsonVisible = false"
@@ -127,7 +127,7 @@
             <el-button id="copybtn" data-clipboard-target=".ace_text-input">双击复制</el-button>
           </template>
         </cus-dialog>
-
+    <!-- 生成代码 对话框 -->
         <cus-dialog
           :visible="codeVisible"
           @on-close="codeVisible = false"
@@ -195,9 +195,13 @@ export default {
       widgetForm: {
         list: [],
         config: {
-          labelWidth: 100,
-          labelPosition: 'top',
-          size: 'small'
+            name: '测试量表',
+            description: '无文献记载',
+            maxTimes: 1,
+            hasAudit: true,
+            sort: 20,
+            labelWidth: 100,
+            labelPosition: 'left'
         },
       },
       configTab: 'widget',

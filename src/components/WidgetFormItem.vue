@@ -3,6 +3,7 @@
       v-if="element && element.key" 
       :class="{active: selectWidget.key == element.key, 'is_req': element.options.required}"
       :label="element.name"
+      :label-width="element.options.labelWidth"
       @click.native.stop="handleSelectWidget(index)"
     >
         <template v-if="element.type == 'input'">
@@ -28,6 +29,7 @@
             :disabled="element.options.disabled"
             :controls-position="element.options.controlsPosition"
             :style="{width: element.options.width}"
+            :precision="element.options.precision"
           ></el-input-number>
         </template>
 
@@ -36,7 +38,7 @@
             :style="{width: element.options.width}"
           >
             <el-radio  
-              :style="{display: element.options.inline ? 'inline-block' : 'block'}"
+              :style="{display: element.options.inline ? 'inline-block' : 'block'}" :disabled="element.options.disabled"
               :label="item.value" v-for="(item, index) in element.options.options" :key="item.value + index"
             >
               {{element.options.showLabel ? item.label : item.value}}
@@ -49,7 +51,7 @@
             :style="{width: element.options.width}"
           >
             <el-checkbox
-              :style="{display: element.options.inline ? 'inline-block' : 'block'}"
+              :style="{display: element.options.inline ? 'inline-block' : 'block'}" :disabled="element.options.disabled"
               :label="item.value" v-for="(item, index) in element.options.options" :key="item.value + index"
             >
               {{element.options.showLabel ? item.label : item.value}}
@@ -115,8 +117,9 @@
             :clearable="element.options.clearable"
             :placeholder="element.options.placeholder"
             :style="{width: element.options.width}"
+            clearable=true
           >
-            <el-option v-for="item in element.options.options" :key="item.value" :value="item.value" :label="element.options.showLabel?item.label:item.value"></el-option>
+            <el-option v-for="item in element.options.options" :key="item.code" :value="item.value" :label="element.options.showLabel?item.label:item.value" :title="item.desc"></el-option>
           </el-select>
         </template>
 
@@ -151,7 +154,21 @@
             token="xxx"
             domain="xxx"
           >
-            
+
+          </fm-upload>
+        </template>
+
+      <template v-if="element.type=='fileupload'">
+          <fm-upload
+                  v-model="element.options.defaultValue"
+                  :disabled="element.options.disabled"
+                  :style="{'width': element.options.width}"
+                  :width="element.options.size.width"
+                  :height="element.options.size.height"
+                  token="xxx"
+                  domain="xxx"
+          >
+
           </fm-upload>
         </template>
 
@@ -182,6 +199,15 @@
           <div style="height: 50px;color: #999;background: #eee;line-height:50px;text-align:center;">自定义区域</div>
         </template>
 
+        <template v-if="element.type == 'calculation'">
+            <el-input
+                    v-model="element.options.defaultValue"
+                    :style="{width: element.options.width}"
+                    :placeholder="element.options.placeholder"
+                    :value="element.options.formula"
+            ></el-input>
+        </template>
+
         <el-button title="删除" @click.stop="handleWidgetDelete(index)" class="widget-action-delete" v-if="selectWidget.key == element.key" circle plain type="danger">
           <!-- <icon name="icon-trash" style="width: 12px;height: 12px;"></icon> -->
           <i class="iconfont icon-trash"></i>
@@ -196,11 +222,15 @@
 
 <script>
 import FmUpload from './Upload'
+import FileUpload from './Upload/fileUpload'
 import FmEditor from './Editor/tinymce'
+import ElSlPanel from "element-ui/packages/color-picker/src/components/sv-panel";
 export default {
   props: ['element', 'select', 'index', 'data'],
   components: {
+    ElSlPanel,
     FmUpload,
+    FileUpload,
     FmEditor
   },
   data () {

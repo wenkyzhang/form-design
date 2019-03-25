@@ -1,5 +1,6 @@
 <template>
-  <el-form-item :label="widget.name" :prop="widget.model">
+  <el-form-item :label="widget.name" :prop="widget.model"
+                :label-width="widget.options.labelWidth">
     <template v-if="widget.type == 'input'" >
       <el-input 
         v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
@@ -7,6 +8,7 @@
         v-model.number="dataModel"
         :placeholder="widget.options.placeholder"
         :style="{width: widget.options.width}"
+        :aria-readonly="widget.options.disable"
       ></el-input>
       <el-input 
         v-else
@@ -31,7 +33,8 @@
         v-model="dataModel" 
         :style="{width: widget.options.width}"
         :step="widget.options.step"
-        controls-position="right"
+        controls-position="widget.options.controlsPosition"
+        :precision="widget.options.precision"
       ></el-input-number>
     </template>
 
@@ -164,6 +167,19 @@
       </fm-upload>
     </template>
 
+    <template v-if="widget.type=='fileupload'">
+      <fm-upload
+        v-model="dataModel"
+        :disabled="widget.options.disabled"
+        :style="{'width': widget.options.width}"
+        :width="widget.options.size.width"
+        :height="widget.options.size.height"
+        :token="widget.options.token"
+        :domain="widget.options.domain"
+      >
+      </fm-upload>
+    </template>
+
     <template v-if="widget.type == 'editor'">
       <fm-editor
         v-model="dataModel"
@@ -191,12 +207,14 @@
 
 <script>
 import FmUpload from './Upload'
+import FileUpload from './Upload/fileUpload'
 import FmEditor from './Editor/tinymce'
 
 export default {
   props: ['widget', 'models', 'rules', 'remote'],
   components: {
     FmUpload,
+    FileUpload,
     FmEditor
   },
   data () {
@@ -217,7 +235,7 @@ export default {
       })
     }
 
-    if (this.widget.type === 'imgupload') {
+    if (this.widget.type === 'imgupload' || this.widget.type === 'fileupload') {
       this.remote[this.widget.options.tokenFunc]((data) => {
         this.widget.options.token = data
       })

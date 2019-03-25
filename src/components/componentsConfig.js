@@ -1,5 +1,13 @@
 export const basicComponents = [
   {
+        type: 'label',
+        name: '标题标签',
+        icon: 'icon-input',
+        options: {
+            labelWidth: '100%'
+        }
+    },
+    {
     type: 'input',
     name: '单行文本',
     icon: 'icon-input',
@@ -10,8 +18,8 @@ export const basicComponents = [
       dataType: 'string',
       pattern: '',
       placeholder: ''
-    }
-  },
+      }
+    },
   {
     type: 'textarea',
     name: '多行文本',
@@ -26,8 +34,17 @@ export const basicComponents = [
     }
   },
   {
+        type: 'editor',
+        name: '超媒文本',
+        icon: 'icon-fuwenbenkuang',
+        options: {
+            defaultValue: '',
+            width: ''
+        }
+    },
+    {
     type: 'number',
-    name: '计数器',
+        name: '数字类型',
     icon: 'icon-number',
     options: {
       width: '',
@@ -37,29 +54,36 @@ export const basicComponents = [
       max: '',
       step: 1,
       disabled: false,
-      controlsPosition: ''
+            controlsPosition: '',
+            precision: 0
     }
   },
   {
     type: 'radio',
-    name: '单选框组',
+        name: '单选列表',
     icon: 'icon-radio-active',
     options: {
       inline: false,
       defaultValue: '',
-      showLabel: false,
+            showLabel: true,
       options: [
         {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        },
-        {
-          value: '选项3',
-          label: '选项3'
+                    code: 1,
+                    value: '0.0',
+                    label: '选项1',
+                    description: ''
+                },
+                {
+                    code: 3,
+                    value: '0.0',
+                    label: '选项2',
+                    description: ''
+                },
+                {
+                    code: 5,
+                    value: '0.0',
+                    label: '选项3',
+                    description: ''
         }
       ],
       required: false,
@@ -75,21 +99,30 @@ export const basicComponents = [
   },
   {
     type: 'checkbox',
-    name: '多选框组',
+        name: '多选列表',
     icon: 'icon-check-box',
     options: {
       inline: false,
       defaultValue: [],
-      showLabel: false,
+            showLabel: true,
       options: [
         {
-          value: '选项1'
-        },
-        {
-          value: '选项2'
-        },
-        {
-          value: '选项3'
+                    code: 1,
+                    value: '0.0',
+                    label: '选项1',
+                    description: ''
+                },
+                {
+                    code: 3,
+                    value: '0.0',
+                    label: '选项2',
+                    description: ''
+                },
+                {
+                    code: 5,
+                    value: '0.0',
+                    label: '选项3',
+                    description: ''
         }
       ],
       required: false,
@@ -104,8 +137,51 @@ export const basicComponents = [
     }
   },
   {
+        type: 'select',
+        name: '下拉列表',
+        icon: 'icon-select',
+        options: {
+            defaultValue: '',
+            multiple: false,
+            disabled: false,
+            clearable: false,
+            placeholder: '',
+            required: false,
+            showLabel: false,
+            width: '',
+            options: [
+                {
+                    code: 1,
+                    value: '0.0',
+                    label: '选项1',
+                    description: ''
+                },
+                {
+                    code: 3,
+                    value: '0.0',
+                    label: '选项2',
+                    description: ''
+                },
+                {
+                    code: 5,
+                    value: '0.0',
+                    label: '选项3',
+                    description: ''
+                }
+            ],
+            remote: false,
+            filterable: false,
+            remoteOptions: [],
+            props: {
+                value: 'value',
+                label: 'label'
+            },
+            remoteFunc: ''
+        }
+    },
+    {
     type: 'time',
-    name: '时间选择器',
+        name: '时间类型',
     icon: 'icon-time',
     options: {
       defaultValue: '21:19:56',
@@ -125,7 +201,7 @@ export const basicComponents = [
   },
   {
     type: 'date',
-    name: '日期选择器',
+        name: '日期时间',
     icon: 'icon-date',
     options: {
       defaultValue: '',
@@ -144,74 +220,8 @@ export const basicComponents = [
     }
   },
   {
-    type: 'rate',
-    name: '评分',
-    icon: 'icon-icon-test',
-    options: {
-      defaultValue: null,
-      max: 5,
-      disabled: false,
-      allowHalf: false,
-      required: false
-    }
-  },
-  {
-    type: 'color',
-    name: '颜色选择器',
-    icon: 'icon-color',
-    options: {
-      defaultValue: '',
-      disabled: false,
-      showAlpha: false,
-      required: false
-    }
-  },
-  {
-    type: 'select',
-    name: '下拉选择框',
-    icon: 'icon-select',
-    options: {
-      defaultValue: '',
-      multiple: false,
-      disabled: false,
-      clearable: false,
-      placeholder: '',
-      required: false,
-      showLabel: false,
-      width: '',
-      options: [
-        {
-          value: '下拉框1'
-        },
-        {
-          value: '下拉框2'
-        },{
-          value: '下拉框3'
-        }
-      ],
-      remote: false,
-      filterable: false,
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: ''
-    }
-  },
-  {
-    type: 'switch',
-    name: '开关',
-    icon: 'icon-switch',
-    options: {
-      defaultValue: false,
-      required: false,
-      disabled: false,
-    }
-  },
-  {
     type: 'slider',
-    name: '滑块',
+        name: '滑块标尺',
     icon: 'icon-slider',
     options: {
       defaultValue: 0,
@@ -224,21 +234,10 @@ export const basicComponents = [
       range: false,
       width: ''
     }
-  }
-]
-
-export const advanceComponents = [
-  {
-    type: 'blank',
-    name: '自定义',
-    icon: 'icon-ic',
-    options: {
-      defaultType: 'String'
-    }
   },
   {
     type: 'imgupload',
-    name: '图片',
+        name: '图片上传',
     icon: 'icon-tupian',
     options: {
       defaultValue: [],
@@ -256,12 +255,67 @@ export const advanceComponents = [
     }
   },
   {
-    type: 'editor',
-    name: '编辑器',
-    icon: 'icon-fuwenbenkuang',
-    options: {
-      defaultValue: '',
-      width: ''
+        type: 'fileupload',
+        name: '文件上传',
+        icon: 'el-icon-document',
+        options: {
+            defaultValue: [],
+            size: {
+                width: 100,
+                height: 100,
+            },
+            width: '',
+            tokenFunc: 'funcGetToken',
+            token: '',
+            domain: 'http://pfp81ptt6.bkt.clouddn.com/',
+            disabled: false,
+            length: 8,
+            multiple: true
+        }
+    }
+    // ,
+    // {
+    //   type: 'switch',
+    //   name: '开关',
+    //   icon: 'icon-switch',
+    //   options: {
+    //     defaultValue: false,
+    //     required: false,
+    //     disabled: false,
+    //   }
+    // },
+    // {
+    //     type: 'color',
+    //     name: '颜色选择器',
+    //     icon: 'icon-color',
+    //     options: {
+    //         defaultValue: '',
+    //         disabled: false,
+    //         showAlpha: false,
+    //         required: false
+    //     }
+    // }
+    // {
+    //   type: 'rate',
+    //   name: '评分',
+    //   icon: 'icon-icon-test',
+    //   options: {
+    //       defaultValue: null,
+    //       max: 5,
+    //       disabled: false,
+    //       allowHalf: false,
+    //       required: false
+    //   }
+    // },
+]
+
+export const advanceComponents = [
+    {
+        type: 'blank',
+        name: '自定义',
+        icon: 'icon-ic',
+        options: {
+            defaultType: 'String'
     }
   },
   {
@@ -283,7 +337,22 @@ export const advanceComponents = [
       },
       remoteFunc: ''
     }
-  }
+    },
+    {
+        type: 'dataFormula',
+        name: '逻辑计算',
+        icon: 'icon-input',
+        options: {
+            id: 'F120',
+            width: '50%',
+            defaultValue: '',
+            required: false,
+            dataType: 'string',
+            pattern: '',
+            placeholder: '',
+            formula: 'sdfadfadflakdfajlksdfjalf'
+        }
+    },
 ]
 
 export const layoutComponents = [
@@ -306,5 +375,20 @@ export const layoutComponents = [
       justify: 'start',
       align: 'top'
     }
-  }
+    },
+    {
+        type: 'pageLogical',
+        name: '页面逻辑',
+        icon: 'icon-input',
+        options: {
+            id: 'F120',
+            width: '50%',
+            defaultValue: '',
+            required: false,
+            dataType: 'string',
+            pattern: '',
+            placeholder: '',
+            formula: 'sdfadfadflakdfajlksdfjalf'
+        }
+    }
 ]
