@@ -4,7 +4,7 @@ export const basicComponents = [
         name: '标题标签',
         icon: 'icon-input',
         options: {
-            labelWidth: '100%'
+            labelWidth: 100,
         }
     },
     {
@@ -13,6 +13,7 @@ export const basicComponents = [
         icon: 'icon-input',
         options: {
             width: '100%',
+            labelWidth: 100,
             defaultValue: '',
             required: false,
             dataType: 'string',
@@ -29,6 +30,7 @@ export const basicComponents = [
         icon: 'icon-diy-com-textarea',
         options: {
             width: '100%',
+            labelWidth: 100,
             defaultValue: '',
             required: false,
             disabled: false,
@@ -41,6 +43,7 @@ export const basicComponents = [
         name: '超媒文本',
         icon: 'icon-fuwenbenkuang',
         options: {
+            labelWidth: 100,
             defaultValue: '',
             width: ''
         }
@@ -51,6 +54,7 @@ export const basicComponents = [
         icon: 'icon-number',
         options: {
             width: '',
+            labelWidth: 100,
             required: false,
             defaultValue: 0,
             min: '',
@@ -66,6 +70,7 @@ export const basicComponents = [
         name: '单选列表',
         icon: 'icon-radio-active',
         options: {
+            labelWidth: 100,
             inline: false,
             defaultValue: '',
             showLabel: true,
@@ -105,6 +110,7 @@ export const basicComponents = [
         name: '多选列表',
         icon: 'icon-check-box',
         options: {
+            labelWidth: 100,
             inline: false,
             defaultValue: [],
             showLabel: true,
@@ -144,6 +150,7 @@ export const basicComponents = [
         name: '下拉列表',
         icon: 'icon-select',
         options: {
+            labelWidth: 100,
             defaultValue: '',
             multiple: false,
             disabled: false,
@@ -187,6 +194,7 @@ export const basicComponents = [
         name: '时间类型',
         icon: 'icon-time',
         options: {
+            labelWidth: 100,
             defaultValue: '21:19:56',
             readonly: false,
             disabled: false,
@@ -207,6 +215,7 @@ export const basicComponents = [
         name: '日期时间',
         icon: 'icon-date',
         options: {
+            labelWidth: 100,
             defaultValue: '',
             readonly: false,
             disabled: false,
@@ -227,6 +236,7 @@ export const basicComponents = [
         name: '滑块标尺',
         icon: 'icon-slider',
         options: {
+            labelWidth: 100,
             defaultValue: 0,
             disabled: false,
             required: false,
@@ -243,6 +253,7 @@ export const basicComponents = [
         name: '图片上传',
         icon: 'icon-tupian',
         options: {
+            labelWidth: 100,
             defaultValue: [],
             size: {
                 width: 100,
@@ -262,6 +273,7 @@ export const basicComponents = [
         name: '文件上传',
         icon: 'el-icon-document',
         options: {
+            labelWidth: 100,
             defaultValue: [],
             size: {
                 width: 100,
@@ -318,6 +330,7 @@ export const advanceComponents = [
         name: '自定义',
         icon: 'icon-ic',
         options: {
+            labelWidth: 100,
             defaultType: 'String'
         }
     },
@@ -326,6 +339,7 @@ export const advanceComponents = [
         name: '级联选择器',
         icon: 'icon-jilianxuanze',
         options: {
+            labelWidth: 100,
             defaultValue: [],
             width: '',
             placeholder: '',
@@ -348,6 +362,7 @@ export const advanceComponents = [
         options: {
             id: 'F120',
             width: '50%',
+            labelWidth: 100,
             defaultValue: '',
             required: false,
             dataType: 'string',
@@ -386,6 +401,7 @@ export const layoutComponents = [
         options: {
             id: 'F120',
             width: '50%',
+            labelWidth: 100,
             defaultValue: '',
             required: false,
             dataType: 'string',

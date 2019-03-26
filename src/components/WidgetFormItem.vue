@@ -124,7 +124,6 @@
                     :clearable="element.options.clearable"
                     :placeholder="element.options.placeholder"
                     :style="{width: element.options.width}"
-                    clearable=true
             >
                 <el-option v-for="item in element.options.options" :key="item.code" :value="item.value"
                            :label="element.options.showLabel?item.label:item.value" :title="item.desc"></el-option>

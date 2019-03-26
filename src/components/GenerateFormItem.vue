@@ -1,24 +1,29 @@
 <template>
   <el-form-item :label="widget.name" :prop="widget.model"
-                :label-width="widget.options.labelWidth"
+                :label-width="widget.options.labelWidth + 'px'"
                 :style="{background: widget.options.bgColor}"
   >
-    <template v-if="widget.type == 'input'" >
+    <template v-if="widget.type == 'input' && widget.options.dataVisible">
       <el-input 
         v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
         :type="widget.options.dataType"
         v-model.number="dataModel"
         :placeholder="widget.options.placeholder"
         :style="{width: widget.options.width}"
-        :aria-readonly="widget.options.disable"
-      ></el-input>
+        :disabled="widget.options.disabled"
+      >
+        <template slot="append" v-if="widget.options.tipsVisible">{{widget.options.tips}}</template>
+      </el-input>
       <el-input 
         v-else
         :type="widget.options.dataType"
         v-model="dataModel"
         :placeholder="widget.options.placeholder"
         :style="{width: widget.options.width}"
-      ></el-input>
+        :disabled="widget.options.disabled"
+      >
+        <template slot="append" v-if="widget.options.tipsVisible">{{widget.options.tips}}</template>
+      </el-input>
     </template>
 
     <template v-if="widget.type == 'textarea'">
