@@ -1,6 +1,8 @@
 <template>
   <el-form-item :label="widget.name" :prop="widget.model"
-                :label-width="widget.options.labelWidth">
+                :label-width="widget.options.labelWidth"
+                :style="{background: widget.options.bgColor}"
+  >
     <template v-if="widget.type == 'input'" >
       <el-input 
         v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"

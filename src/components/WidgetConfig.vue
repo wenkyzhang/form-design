@@ -1,6 +1,7 @@
 <template>
     <el-container>
         <div v-if="show" id="widgetConfigDiv">
+            <el-button @click="showData()">查看信息</el-button>
             <el-form label-position="left" label-width="80px">
                 <div class="widget-cate">基本属性</div>
                 <el-form-item label="编号">
@@ -13,6 +14,10 @@
                               v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
                     <el-input v-model="data.options.placeholder"></el-input>
                 </el-form-item>
+                <el-form-item label="提示内容"
+                              v-if="Object.keys(data.options).indexOf('tips')>=0 && (data.type!='time' || data.type!='date')">
+                    <el-input v-model="data.options.tips"></el-input>
+                </el-form-item>
 
                 <div class="widget-cate">布局属性</div>
                 <el-form-item label="标签宽度">
@@ -23,11 +28,9 @@
                     <el-input v-model="data.options.width"></el-input>
 
                 </el-form-item>
-
                 <el-form-item label="高度" v-if="Object.keys(data.options).indexOf('height')>=0">
                     <el-input v-model="data.options.height"></el-input>
                 </el-form-item>
-
                 <el-form-item label="大小" v-if="Object.keys(data.options).indexOf('size')>=0">
                     宽度：
                     <el-input style="width: 90px;" type="number" v-model.number="data.options.size.width"></el-input>
@@ -57,8 +60,11 @@
                 <el-form-item label="不可编辑">
                     <el-switch v-model="data.options.disabled"></el-switch>
                 </el-form-item>
-                <el-form-item label="是否可见">
-                    <el-switch v-model="data.options.visible"></el-switch>
+                <el-form-item label="数据可见">
+                    <el-switch v-model="data.options.dataVisible"></el-switch>
+                </el-form-item>
+                <el-form-item label="提示可见">
+                    <el-switch v-model="data.options.tipsVisible"></el-switch>
                 </el-form-item>
                 <el-form-item label="布局方式" v-if="Object.keys(data.options).indexOf('inline')>=0">
                     <el-radio-group v-model="data.options.inline">
@@ -66,9 +72,6 @@
                         <el-radio-button :label="true">行内</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
-                <!--
-                <el-input-number v-model="num9" :precision="data.options.precision" :step="0.1" :max="10"></el-input-number>
-                 -->
 
                 <div class="widget-cate">数据控制</div>
                 <el-form-item label="公式" v-if="data.type=='dataFormula'">
@@ -139,16 +142,10 @@
                     <el-switch v-model="data.options.filterable"></el-switch>
                 </el-form-item>
                 <el-form-item label="允许半选" v-if="Object.keys(data.options).indexOf('allowHalf')>=0">
-                    <el-switch
-                            v-model="data.options.allowHalf"
-                    >
-                    </el-switch>
+                    <el-switch v-model="data.options.allowHalf"></el-switch>
                 </el-form-item>
                 <el-form-item label="支持透明度选择" v-if="Object.keys(data.options).indexOf('showAlpha')>=0">
-                    <el-switch
-                            v-model="data.options.showAlpha"
-                    >
-                    </el-switch>
+                    <el-switch v-model="data.options.showAlpha"></el-switch>
                 </el-form-item>
                 <el-form-item label="是否显示标签" v-if="Object.keys(data.options).indexOf('showLabel')>=0">
                     <el-switch v-model="data.options.showLabel"></el-switch>
@@ -231,315 +228,317 @@
                         <el-button type="text" @click="handleAddOption">添加选项</el-button>
                     </div>
                     -->
-</template>
+                    </template>
 
-</el-form-item>
+                </el-form-item>
 
-<el-form-item label="远端数据" v-if="data.type=='cascader'">
-    <div>
-        <el-input size="mini" style="" v-model="data.options.remoteFunc">
-            <template slot="prepend">远端方法</template>
-        </el-input>
-        <el-input size="mini" style="" v-model="data.options.props.value">
-            <template slot="prepend">值</template>
-        </el-input>
-        <el-input size="mini" style="" v-model="data.options.props.label">
-            <template slot="prepend">标签</template>
-        </el-input>
-        <el-input size="mini" style="" v-model="data.options.props.children">
-            <template slot="prepend">子选项</template>
-        </el-input>
-    </div>
-</el-form-item>
+                <el-form-item label="远端数据" v-if="data.type=='cascader'">
+                    <div>
+                        <el-input size="mini" style="" v-model="data.options.remoteFunc">
+                            <template slot="prepend">远端方法</template>
+                        </el-input>
+                        <el-input size="mini" style="" v-model="data.options.props.value">
+                            <template slot="prepend">值</template>
+                        </el-input>
+                        <el-input size="mini" style="" v-model="data.options.props.label">
+                            <template slot="prepend">标签</template>
+                        </el-input>
+                        <el-input size="mini" style="" v-model="data.options.props.children">
+                            <template slot="prepend">子选项</template>
+                        </el-input>
+                    </div>
+                </el-form-item>
 
 
-<template v-if="data.type == 'time' || data.type == 'date'">
-    <el-form-item label="日期类型" v-if="data.type == 'date'">
-        <el-select v-model="data.options.type" @change="optionTypeChange()">
-            <el-option value="year" label="年"></el-option>
-            <el-option value="month" label="年月"></el-option>
-            <el-option value="date" label="年月日"></el-option>
-            <el-option value="dates" label="多日期选择"></el-option>
-            <!-- <el-option value="week"></el-option> -->
-            <el-option value="daterange" label="日期范围选择"></el-option>
-            <el-option value="datetime" label="日期时间"></el-option>
-            <el-option value="datetimerange" label="日期时间范围选择"></el-option>
-        </el-select>
-    </el-form-item>
-    <el-form-item label="是否为范围选择" v-if="data.type == 'time'">
-        <el-switch v-model="data.options.isRange"></el-switch>
-    </el-form-item>
-
-    </el-switch>
-    <el-form-item label="开始时间占位内容"
-                  v-if="(data.options.isRange) || data.options.type=='datetimerange' || data.options.type=='daterange'">
-        <el-input v-model="data.options.startPlaceholder"></el-input>
-    </el-form-item>
-    <el-form-item label="结束时间占位内容"
-                  v-if="data.options.isRange || data.options.type=='datetimerange' || data.options.type=='daterange'">
-        <el-input v-model="data.options.endPlaceholder"></el-input>
-    </el-form-item>
-    <el-form-item label="转化为时间戳" v-if="data.type == 'date'">
-        <el-switch v-model="data.options.timestamp"></el-switch>
-    </el-form-item>
-    <!--
-<el-form-item label="格式">
-<el-input v-model="data.options.format"></el-input>
-</el-form-item>
-<el-form-item label="默认值" v-if="data.type=='time' && Object.keys(data.options).indexOf('isRange')>=0">
-<el-time-picker
-key="1"
-style="width: 100%;"
-v-if="!data.options.isRange"
-v-model="data.options.defaultValue"
-:arrowControl="data.options.arrowControl"
-:value-format="data.options.format"
->
-</el-time-picker>
-<el-time-picker
-key="2"
-v-if="data.options.isRange"
-style="width: 100%;"
-v-model="data.options.defaultValue"
-is-range
-:arrowControl="data.options.arrowControl"
-:value-format="data.options.format"
->
-</el-time-picker>
-</el-form-item>
-    -->
-</template>
-
-<template v-if="data.type=='imgupload'">
-    <el-form-item label="最大上传数">
-        <el-input type="number" v-model.number="data.options.length"></el-input>
-    </el-form-item>
-    <el-form-item label="Domain" :required="true">
-        <el-input v-model="data.options.domain"></el-input>
-    </el-form-item>
-    <el-form-item label="获取七牛Token方法" :required="true">
-        <el-input v-model="data.options.tokenFunc"></el-input>
-    </el-form-item>
-</template>
-
-<template v-if="data.type=='blank'">
-    <el-form-item label="绑定数据类型">
-        <el-select v-model="data.options.defaultType">
-            <el-option value="String" label="字符"></el-option>
-            <el-option value="Object" label="对象"></el-option>
-            <el-option value="Array" label="数组"></el-option>
-        </el-select>
-    </el-form-item>
-</template>
-
-<template v-if="data.type == 'grid'">
-    <el-form-item label="栅格间隔">
-        <el-input type="number" v-model.number="data.options.gutter"></el-input>
-    </el-form-item>
-    <el-form-item label="列配置项">
-        <draggable tag="ul" :list="data.columns"
-                   v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-                   handle=".drag-item"
-        >
-            <li v-for="(item, index) in data.columns" :key="index">
-                <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i
-                        class="iconfont icon-icon_bars"></i></i>
-                <el-input placeholder="栅格值" size="mini" style="width: 100px;" type="number"
-                          v-model.number="item.span"></el-input>
-
-                <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini"
-                           icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
-
-            </li>
-        </draggable>
-        <div style="margin-left: 22px;">
-            <el-button type="text" @click="handleAddColumn">添加列</el-button>
-        </div>
-    </el-form-item>
-    <el-form-item label="水平排列方式">
-        <el-select v-model="data.options.justify">
-            <el-option value="start" label="左对齐"></el-option>
-            <el-option value="end" label="右对齐"></el-option>
-            <el-option value="center" label="居中"></el-option>
-            <el-option value="space-around" label="两侧间隔相等"></el-option>
-            <el-option value="space-between" label="两端对齐"></el-option>
-        </el-select>
-    </el-form-item>
-    <el-form-item label="垂直排列方式">
-        <el-select v-model="data.options.align">
-            <el-option value="top" label="顶部对齐"></el-option>
-            <el-option value="middle" label="居中"></el-option>
-            <el-option value="bottom" label="底部对齐"></el-option>
-        </el-select>
-    </el-form-item>
-</template>
-
-<template v-if="data.type != 'grid'">
-
-    <el-form-item label="数据绑定Key">
-        <el-input v-model="data.model"></el-input>
-    </el-form-item>
-    <el-form-item label="操作属性">
-        <el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读
-        </el-checkbox>
-        <el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用
-        </el-checkbox>
-        <el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入
-        </el-checkbox>
-        <el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮
-        </el-checkbox>
-        <el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">
-            使用箭头进行时间选择
-        </el-checkbox>
-    </el-form-item>
-    <el-form-item label="校验">
-        <div>
-            <el-checkbox v-model="data.options.required">必填</el-checkbox>
-        </div>
-        <el-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="mini">
-            <el-option value="string" label="字符串"></el-option>
-            <el-option value="number" label="数字"></el-option>
-            <el-option value="boolean" label="布尔值"></el-option>
-            <el-option value="integer" label="整数"></el-option>
-            <el-option value="float" label="浮点数"></el-option>
-            <el-option value="url" label="URL地址"></el-option>
-            <el-option value="email" label="邮箱地址"></el-option>
-            <el-option value="hex" label="十六进制"></el-option>
-        </el-select>
-
-        <div v-if="Object.keys(data.options).indexOf('pattern')>=0">
-            <el-input size="mini" v-model.lazy="data.options.pattern" style=" width: 240px;"
-                      placeholder="填写正则表达式"></el-input>
-        </div>
-    </el-form-item>
-</template>
-</el-form>
-</div>
-<cus-dialog
-        :visible="collectSetVisible"
-        @on-close="collectSetVisible = false"
-        title="集合设置"
-        ref="collectSet"
-        width="800px"
-        form
-        :action="false"
->
-    <div style="width: 100%;">
-        <el-table
-                :data="data && data.options && data.options.options"
-                border
-                highlight-current-row
-                style="width: 100%">
-            <el-table-column
-                    type="index"
-                    label="序号"
-                    align="center"
-                    header-align="center"
-                    width="50">
-            </el-table-column>
-            <el-table-column
-                    prop="code"
-                    label="编码"
-                    align="center"
-                    header-align="center"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="label"
-                    label="文本"
-                    align="center"
-                    header-align="center"
-                    width="150">
-            </el-table-column>
-            <el-table-column
-                    prop="value"
-                    label="分值"
-                    align="center"
-                    header-align="center"
-                    width="100">
-            </el-table-column>
-            <el-table-column
-                    prop="description"
-                    label="描述"
-                    align="center"
-                    header-align="center">
-            </el-table-column>
-            <el-table-column
-                    label="操作"
-                    align="center"
-                    header-align="center"
-                    width="100">
-                <template slot-scope="scope">
-                    <el-button @click="handleRowEdit(scope.row)" type="text" size="small">修改</el-button>
-                    <el-button @click="handleRowDelete(scope.row)" type="text" size="small">删除</el-button>
+                <template v-if="data.type == 'time' || data.type == 'date'">
+                    <el-form-item label="日期类型" v-if="data.type == 'date'">
+                        <el-select v-model="data.options.type" @change="optionTypeChange()">
+                            <el-option value="year" label="年"></el-option>
+                            <el-option value="month" label="年月"></el-option>
+                            <el-option value="date" label="年月日"></el-option>
+                            <el-option value="dates" label="多日期选择"></el-option>
+                            <!-- <el-option value="week"></el-option> -->
+                            <el-option value="daterange" label="日期范围选择"></el-option>
+                            <el-option value="datetime" label="日期时间"></el-option>
+                            <el-option value="datetimerange" label="日期时间范围选择"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="是否为范围选择" v-if="data.type == 'time'">
+                        <el-switch v-model="data.options.isRange"></el-switch>
+                    </el-form-item>
+                    <el-form-item label="开始时间占位内容"
+                                  v-if="(data.options.isRange) || data.options.type=='datetimerange' || data.options.type=='daterange'">
+                        <el-input v-model="data.options.startPlaceholder"></el-input>
+                    </el-form-item>
+                    <el-form-item label="结束时间占位内容"
+                                  v-if="data.options.isRange || data.options.type=='datetimerange' || data.options.type=='daterange'">
+                        <el-input v-model="data.options.endPlaceholder"></el-input>
+                    </el-form-item>
+                    <el-form-item label="转化为时间戳" v-if="data.type == 'date'">
+                        <el-switch v-model="data.options.timestamp"></el-switch>
+                    </el-form-item>
+                    <!--
+                    <el-form-item label="格式">
+                    <el-input v-model="data.options.format"></el-input>
+                    </el-form-item>
+                    <el-form-item label="默认值" v-if="data.type=='time' && Object.keys(data.options).indexOf('isRange')>=0">
+                    <el-time-picker
+                    key="1"
+                    style="width: 100%;"
+                    v-if="!data.options.isRange"
+                    v-model="data.options.defaultValue"
+                    :arrowControl="data.options.arrowControl"
+                    :value-format="data.options.format"
+                    >
+                    </el-time-picker>
+                    <el-time-picker
+                    key="2"
+                    v-if="data.options.isRange"
+                    style="width: 100%;"
+                    v-model="data.options.defaultValue"
+                    is-range
+                    :arrowControl="data.options.arrowControl"
+                    :value-format="data.options.format"
+                    >
+                    </el-time-picker>
+                    </el-form-item>
+                    -->
                 </template>
-            </el-table-column>
-        </el-table>
-        <el-card class="width:90%; margin-top:40px;">
-            <el-form>
-                <el-form-item label-width="40px" label="编码">
-                    <el-input v-model="collectSet.code"></el-input>
-                </el-form-item>
-                <el-form-item label-width="40px" label="文本">
-                    <el-input v-model="collectSet.label"></el-input>
-                </el-form-item>
-                <el-form-item label-width="40px" label="分支">
-                    <el-input-number v-model="collectSet.value"></el-input-number>
-                </el-form-item>
-                <el-form-item label-width="40px" label="描述">
-                    <el-input v-model="collectSet.description"></el-input>
-                </el-form-item>
+
+                <template v-if="data.type=='imgupload'">
+                    <el-form-item label="最大上传数">
+                        <el-input type="number" v-model.number="data.options.length"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Domain" :required="true">
+                        <el-input v-model="data.options.domain"></el-input>
+                    </el-form-item>
+                    <el-form-item label="获取七牛Token方法" :required="true">
+                        <el-input v-model="data.options.tokenFunc"></el-input>
+                    </el-form-item>
+                </template>
+
+                <template v-if="data.type=='blank'">
+                    <el-form-item label="绑定数据类型">
+                        <el-select v-model="data.options.defaultType">
+                            <el-option value="String" label="字符"></el-option>
+                            <el-option value="Object" label="对象"></el-option>
+                            <el-option value="Array" label="数组"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </template>
+
+                <template v-if="data.type == 'grid'">
+                    <el-form-item label="栅格间隔">
+                        <el-input type="number" v-model.number="data.options.gutter"></el-input>
+                    </el-form-item>
+                    <el-form-item label="列配置项">
+                        <draggable tag="ul" :list="data.columns"
+                                   v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
+                                   handle=".drag-item"
+                        >
+                            <li v-for="(item, index) in data.columns" :key="index">
+                                <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i
+                                        class="iconfont icon-icon_bars"></i></i>
+                                <el-input placeholder="栅格值" size="mini" style="width: 100px;" type="number"
+                                          v-model.number="item.span"></el-input>
+
+                                <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini"
+                                           icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
+
+                            </li>
+                        </draggable>
+                        <div style="margin-left: 22px;">
+                            <el-button type="text" @click="handleAddColumn">添加列</el-button>
+                        </div>
+                    </el-form-item>
+                    <el-form-item label="水平排列方式">
+                        <el-select v-model="data.options.justify">
+                            <el-option value="start" label="左对齐"></el-option>
+                            <el-option value="end" label="右对齐"></el-option>
+                            <el-option value="center" label="居中"></el-option>
+                            <el-option value="space-around" label="两侧间隔相等"></el-option>
+                            <el-option value="space-between" label="两端对齐"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="垂直排列方式">
+                        <el-select v-model="data.options.align">
+                            <el-option value="top" label="顶部对齐"></el-option>
+                            <el-option value="middle" label="居中"></el-option>
+                            <el-option value="bottom" label="底部对齐"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </template>
+
+                <template v-if="data.type != 'grid'">
+                    <el-form-item label="数据绑定Key">
+                        <el-input v-model="data.model"></el-input>
+                    </el-form-item>
+                    <el-form-item label="操作属性">
+                        <el-checkbox v-model="data.options.readonly"
+                                     v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读
+                        </el-checkbox>
+                        <el-checkbox v-model="data.options.disabled"
+                                     v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用
+                        </el-checkbox>
+                        <el-checkbox v-model="data.options.editable"
+                                     v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入
+                        </el-checkbox>
+                        <el-checkbox v-model="data.options.clearable"
+                                     v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮
+                        </el-checkbox>
+                        <el-checkbox v-model="data.options.arrowControl"
+                                     v-if="Object.keys(data.options).indexOf('arrowControl')>=0">
+                            使用箭头进行时间选择
+                        </el-checkbox>
+                    </el-form-item>
+                    <el-form-item label="校验">
+                        <div>
+                            <el-checkbox v-model="data.options.required">必填</el-checkbox>
+                        </div>
+                        <el-select v-if="Object.keys(data.options).indexOf('dataType')>=0"
+                                   v-model="data.options.dataType" size="mini">
+                            <el-option value="string" label="字符串"></el-option>
+                            <el-option value="number" label="数字"></el-option>
+                            <el-option value="boolean" label="布尔值"></el-option>
+                            <el-option value="integer" label="整数"></el-option>
+                            <el-option value="float" label="浮点数"></el-option>
+                            <el-option value="url" label="URL地址"></el-option>
+                            <el-option value="email" label="邮箱地址"></el-option>
+                            <el-option value="hex" label="十六进制"></el-option>
+                        </el-select>
+
+                        <div v-if="Object.keys(data.options).indexOf('pattern')>=0">
+                            <el-input size="mini" v-model.lazy="data.options.pattern" style=" width: 240px;"
+                                      placeholder="填写正则表达式"></el-input>
+                        </div>
+                    </el-form-item>
+                </template>
             </el-form>
-            <el-button @click="saveCollectSet()">保存</el-button>
-            <el-button @click="resetCollectSet()">重置</el-button>
-        </el-card>
-        <div style="width:100%; text-align: center; margin: 10px 0px;">
-            <el-button @click="closeDialog()">关闭</el-button>
         </div>
+        <cus-dialog
+                :visible="collectSetVisible"
+                @on-close="collectSetVisible = false"
+                title="集合设置"
+                ref="collectSet"
+                width="800px"
+                form
+                :action="false"
+        >
+            <div style="width: 100%;">
+                <el-table
+                        :data="data && data.options && data.options.options"
+                        border
+                        highlight-current-row
+                        style="width: 100%">
+                    <el-table-column
+                            type="index"
+                            label="序号"
+                            align="center"
+                            header-align="center"
+                            width="50">
+                    </el-table-column>
+                    <el-table-column
+                            prop="code"
+                            label="编码"
+                            align="center"
+                            header-align="center"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="label"
+                            label="文本"
+                            align="center"
+                            header-align="center"
+                            width="150">
+                    </el-table-column>
+                    <el-table-column
+                            prop="value"
+                            label="分值"
+                            align="center"
+                            header-align="center"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
+                            prop="description"
+                            label="描述"
+                            align="center"
+                            header-align="center">
+                    </el-table-column>
+                    <el-table-column
+                            label="操作"
+                            align="center"
+                            header-align="center"
+                            width="100">
+                        <template slot-scope="scope">
+                            <el-button @click="handleRowEdit(scope.row)" type="text" size="small">修改</el-button>
+                            <el-button @click="handleRowDelete(scope.row)" type="text" size="small">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-card class="width:90%; margin-top:40px;">
+                    <el-form>
+                        <el-form-item label-width="40px" label="编码">
+                            <el-input v-model="collectSet.code"></el-input>
+                        </el-form-item>
+                        <el-form-item label-width="40px" label="文本">
+                            <el-input v-model="collectSet.label"></el-input>
+                        </el-form-item>
+                        <el-form-item label-width="40px" label="分支">
+                            <el-input-number v-model="collectSet.value"></el-input-number>
+                        </el-form-item>
+                        <el-form-item label-width="40px" label="描述">
+                            <el-input v-model="collectSet.description"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <el-button @click="saveCollectSet()">保存</el-button>
+                    <el-button @click="resetCollectSet()">重置</el-button>
+                </el-card>
+                <div style="width:100%; text-align: center; margin: 10px 0px;">
+                    <el-button @click="closeDialog()">关闭</el-button>
+                </div>
+            </div>
+        </cus-dialog>
+        <!-- 逻辑计算配置弹窗  -->
+        <cus-dialog
+                :visible="dataFormulaVisible"
+                @on-close="dataFormulaVisible = false"
+                title="逻辑计算"
+                ref="PageLogical"
+                width="800px"
+                form
+                :action="false"
+        >
+            <div style="width: 100%;">
+                <el-card class="width:90%; margin-top:40px;">
 
-    </div>
-</cus-dialog>
-<!-- 逻辑计算配置弹窗  -->
-<cus-dialog
-        :visible="dataFormulaVisible"
-        @on-close="dataFormulaVisible = false"
-        title="逻辑计算"
-        ref="PageLogical"
-        width="800px"
-        form
-        :action="false"
->
-    <div style="width: 100%;">
-        <el-card class="width:90%; margin-top:40px;">
+                </el-card>
+                <div style="width:100%; text-align: center; margin: 10px 0px;">
+                    <el-button @click="closeDialog()">关闭</el-button>
+                </div>
 
-        </el-card>
-        <div style="width:100%; text-align: center; margin: 10px 0px;">
-            <el-button @click="closeDialog()">关闭</el-button>
-        </div>
+            </div>
+        </cus-dialog>
+        <!-- 页面逻辑配置弹窗  -->
+        <cus-dialog
+                :visible="pageLogicalVisible"
+                @on-close="pageLogicalVisible = false"
+                title="页面逻辑"
+                ref="PageLogical"
+                width="800px"
+                form
+                :action="false"
+        >
+            <div style="width: 100%;">
+                <el-card class="width:90%; margin-top:40px;">
 
-    </div>
-</cus-dialog>
-<!-- 页面逻辑配置弹窗  -->
-<cus-dialog
-        :visible="pageLogicalVisible"
-        @on-close="pageLogicalVisible = false"
-        title="页面逻辑"
-        ref="PageLogical"
-        width="800px"
-        form
-        :action="false"
->
-    <div style="width: 100%;">
-        <el-card class="width:90%; margin-top:40px;">
+                </el-card>
+                <div style="width:100%; text-align: center; margin: 10px 0px;">
+                    <el-button @click="closeDialog()">关闭</el-button>
+                </div>
 
-        </el-card>
-        <div style="width:100%; text-align: center; margin: 10px 0px;">
-            <el-button @click="closeDialog()">关闭</el-button>
-        </div>
-
-    </div>
-</cus-dialog>
-</el-container>
+            </div>
+        </cus-dialog>
+    </el-container>
 
 </template>
 
@@ -554,7 +553,7 @@ is-range
             Draggable,
             CusDialog
         },
-        props: ['data'],
+        props: ['data', 'form'],
         data() {
             return {
                 collectSetVisible: false,       //控制集合设置弹窗显示
@@ -577,9 +576,11 @@ is-range
             }
         },
         computed: {
+
             show() {
                 if (this.data && Object.keys(this.data).length > 0) {
-                    return true
+                    //this.data.options.labelWidth = 200;
+                    return true;
                 }
                 return false
             }
@@ -587,6 +588,9 @@ is-range
         mounted() {
         },
         methods: {
+            showData(){
+              console.log(this.data);
+            },
             generateLogicalDialog(obj) {
                 obj = true;
             },

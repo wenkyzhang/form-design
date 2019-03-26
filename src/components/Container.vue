@@ -3,7 +3,6 @@
     <el-main >
       <el-container>
         <el-aside style="wdith: 250px;">
-
           <div class="components-list">
             <div class="widget-cate">基础字段</div>
             <draggable tag="ul" :list="basicComponents" 
@@ -53,7 +52,6 @@
               </li>
             </draggable>
           </div>
-          
         </el-aside>
         <el-container class="center-container" direction="vertical">
           <el-header class="btn-bar" style="height: 45px;">
@@ -77,7 +75,7 @@
               <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">表单属性</div>
             </el-header>
             <el-main class="config-content">
-              <widget-config v-show="configTab=='widget'" :data="widgetFormSelect"></widget-config>
+              <widget-config v-show="configTab=='widget'" :data="widgetFormSelect" :form="widgetForm.config"></widget-config>
               <form-config v-show="configTab=='form'" :data="widgetForm.config"></form-config>
             </el-main>
           </el-container>

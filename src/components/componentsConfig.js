@@ -1,5 +1,5 @@
 export const basicComponents = [
-  {
+    {
         type: 'label',
         name: '标题标签',
         icon: 'icon-input',
@@ -8,32 +8,35 @@ export const basicComponents = [
         }
     },
     {
-    type: 'input',
-    name: '单行文本',
-    icon: 'icon-input',
-    options: {
-      width: '100%',
-      defaultValue: '',
-      required: false,
-      dataType: 'string',
-      pattern: '',
-      placeholder: ''
-      }
+        type: 'input',
+        name: '单行文本',
+        icon: 'icon-input',
+        options: {
+            width: '100%',
+            defaultValue: '',
+            required: false,
+            dataType: 'string',
+            pattern: '',
+            placeholder: '',
+            tips: '',
+            dataVisible: true,
+            tipsVisible: false
+        }
     },
-  {
-    type: 'textarea',
-    name: '多行文本',
-    icon: 'icon-diy-com-textarea',
-    options: {
-      width: '100%',
-      defaultValue: '',
-      required: false,
-      disabled: false,
-      pattern: '',
-      placeholder: ''
-    }
-  },
-  {
+    {
+        type: 'textarea',
+        name: '多行文本',
+        icon: 'icon-diy-com-textarea',
+        options: {
+            width: '100%',
+            defaultValue: '',
+            required: false,
+            disabled: false,
+            pattern: '',
+            placeholder: ''
+        }
+    },
+    {
         type: 'editor',
         name: '超媒文本',
         icon: 'icon-fuwenbenkuang',
@@ -43,31 +46,31 @@ export const basicComponents = [
         }
     },
     {
-    type: 'number',
+        type: 'number',
         name: '数字类型',
-    icon: 'icon-number',
-    options: {
-      width: '',
-      required: false,
-      defaultValue: 0,
-      min: '',
-      max: '',
-      step: 1,
-      disabled: false,
+        icon: 'icon-number',
+        options: {
+            width: '',
+            required: false,
+            defaultValue: 0,
+            min: '',
+            max: '',
+            step: 1,
+            disabled: false,
             controlsPosition: '',
             precision: 0
-    }
-  },
-  {
-    type: 'radio',
+        }
+    },
+    {
+        type: 'radio',
         name: '单选列表',
-    icon: 'icon-radio-active',
-    options: {
-      inline: false,
-      defaultValue: '',
+        icon: 'icon-radio-active',
+        options: {
+            inline: false,
+            defaultValue: '',
             showLabel: true,
-      options: [
-        {
+            options: [
+                {
                     code: 1,
                     value: '0.0',
                     label: '选项1',
@@ -84,29 +87,29 @@ export const basicComponents = [
                     value: '0.0',
                     label: '选项3',
                     description: ''
+                }
+            ],
+            required: false,
+            width: '',
+            remote: false,
+            remoteOptions: [],
+            props: {
+                value: 'value',
+                label: 'label'
+            },
+            remoteFunc: ''
         }
-      ],
-      required: false,
-      width: '',
-      remote: false,
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: ''
-    }
-  },
-  {
-    type: 'checkbox',
+    },
+    {
+        type: 'checkbox',
         name: '多选列表',
-    icon: 'icon-check-box',
-    options: {
-      inline: false,
-      defaultValue: [],
+        icon: 'icon-check-box',
+        options: {
+            inline: false,
+            defaultValue: [],
             showLabel: true,
-      options: [
-        {
+            options: [
+                {
                     code: 1,
                     value: '0.0',
                     label: '选项1',
@@ -123,20 +126,20 @@ export const basicComponents = [
                     value: '0.0',
                     label: '选项3',
                     description: ''
+                }
+            ],
+            required: false,
+            width: '',
+            remote: false,
+            remoteOptions: [],
+            props: {
+                value: 'value',
+                label: 'label'
+            },
+            remoteFunc: ''
         }
-      ],
-      required: false,
-      width: '',
-      remote: false,
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: ''
-    }
-  },
-  {
+    },
+    {
         type: 'select',
         name: '下拉列表',
         icon: 'icon-select',
@@ -180,81 +183,81 @@ export const basicComponents = [
         }
     },
     {
-    type: 'time',
+        type: 'time',
         name: '时间类型',
-    icon: 'icon-time',
-    options: {
-      defaultValue: '21:19:56',
-      readonly: false,
-      disabled: false,
-      editable: true,
-      clearable: true,
-      placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
-      isRange: false,
-      arrowControl: true,
-      format: 'HH:mm:ss',
-      required: false,
-      width: '',
-    }
-  },
-  {
-    type: 'date',
+        icon: 'icon-time',
+        options: {
+            defaultValue: '21:19:56',
+            readonly: false,
+            disabled: false,
+            editable: true,
+            clearable: true,
+            placeholder: '',
+            startPlaceholder: '',
+            endPlaceholder: '',
+            isRange: false,
+            arrowControl: true,
+            format: 'HH:mm:ss',
+            required: false,
+            width: '',
+        }
+    },
+    {
+        type: 'date',
         name: '日期时间',
-    icon: 'icon-date',
-    options: {
-      defaultValue: '',
-      readonly: false,
-      disabled: false,
-      editable: true,
-      clearable: true,
-      placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
-      type: 'date',
-      format: 'yyyy-MM-dd',
-      timestamp: false,
-      required: false,
-      width: '',
-    }
-  },
-  {
-    type: 'slider',
+        icon: 'icon-date',
+        options: {
+            defaultValue: '',
+            readonly: false,
+            disabled: false,
+            editable: true,
+            clearable: true,
+            placeholder: '',
+            startPlaceholder: '',
+            endPlaceholder: '',
+            type: 'date',
+            format: 'yyyy-MM-dd',
+            timestamp: false,
+            required: false,
+            width: '',
+        }
+    },
+    {
+        type: 'slider',
         name: '滑块标尺',
-    icon: 'icon-slider',
-    options: {
-      defaultValue: 0,
-      disabled: false,
-      required: false,
-      min: 0,
-      max: 100,
-      step: 1,
-      showInput: false,
-      range: false,
-      width: ''
-    }
-  },
-  {
-    type: 'imgupload',
+        icon: 'icon-slider',
+        options: {
+            defaultValue: 0,
+            disabled: false,
+            required: false,
+            min: 0,
+            max: 100,
+            step: 1,
+            showInput: false,
+            range: false,
+            width: ''
+        }
+    },
+    {
+        type: 'imgupload',
         name: '图片上传',
-    icon: 'icon-tupian',
-    options: {
-      defaultValue: [],
-      size: {
-        width: 100,
-        height: 100,
-      },
-      width: '',
-      tokenFunc: 'funcGetToken',
-      token: '',
-      domain: 'http://pfp81ptt6.bkt.clouddn.com/',
-      disabled: false,
-      length: 8,
-      multiple: true
-    }
-  },
-  {
+        icon: 'icon-tupian',
+        options: {
+            defaultValue: [],
+            size: {
+                width: 100,
+                height: 100,
+            },
+            width: '',
+            tokenFunc: 'funcGetToken',
+            token: '',
+            domain: 'http://pfp81ptt6.bkt.clouddn.com/',
+            disabled: false,
+            length: 8,
+            multiple: true
+        }
+    },
+    {
         type: 'fileupload',
         name: '文件上传',
         icon: 'el-icon-document',
@@ -316,27 +319,27 @@ export const advanceComponents = [
         icon: 'icon-ic',
         options: {
             defaultType: 'String'
-    }
-  },
-  {
-    type: 'cascader',
-    name: '级联选择器',
-    icon: 'icon-jilianxuanze',
-    options: {
-      defaultValue: [],
-      width: '',
-      placeholder: '',
-      disabled: false,
-      clearable: false,
-      remote: true,
-      remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label',
-        children: 'children'
-      },
-      remoteFunc: ''
-    }
+        }
+    },
+    {
+        type: 'cascader',
+        name: '级联选择器',
+        icon: 'icon-jilianxuanze',
+        options: {
+            defaultValue: [],
+            width: '',
+            placeholder: '',
+            disabled: false,
+            clearable: false,
+            remote: true,
+            remoteOptions: [],
+            props: {
+                value: 'value',
+                label: 'label',
+                children: 'children'
+            },
+            remoteFunc: ''
+        }
     },
     {
         type: 'dataFormula',
@@ -356,25 +359,25 @@ export const advanceComponents = [
 ]
 
 export const layoutComponents = [
-  {
-    type: 'grid',
-    name: '栅格布局',
-    icon: 'icon-grid-',
-    columns: [
-      {
-        span: 12,
-        list: []
-      },
-      {
-        span: 12,
-        list: []
-      }
-    ],
-    options: {
-      gutter: 0,
-      justify: 'start',
-      align: 'top'
-    }
+    {
+        type: 'grid',
+        name: '栅格布局',
+        icon: 'icon-grid-',
+        columns: [
+            {
+                span: 12,
+                list: []
+            },
+            {
+                span: 12,
+                list: []
+            }
+        ],
+        options: {
+            gutter: 0,
+            justify: 'start',
+            align: 'top'
+        }
     },
     {
         type: 'pageLogical',
