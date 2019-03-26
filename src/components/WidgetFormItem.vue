@@ -212,6 +212,7 @@
                     :style="{width: element.options.width}"
                     :placeholder="element.options.placeholder"
                     :value="element.options.formula"
+                    :disabled="element.options.disabled"
             ></el-input>
         </template>
 

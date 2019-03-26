@@ -42,6 +42,7 @@
         :step="widget.options.step"
         controls-position="widget.options.controlsPosition"
         :precision="widget.options.precision"
+        :disabled="widget.options.disabled"
       ></el-input-number>
     </template>
 
@@ -52,6 +53,7 @@
         <el-radio
           :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
           :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
+          :disabled="widget.options.disabled"
         >
           <template v-if="widget.options.remote">{{item.label}}</template>
           <template v-else>{{widget.options.showLabel ? item.label : item.value}}</template>
@@ -67,6 +69,7 @@
           
           :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
           :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
+          :disabled="widget.options.disabled"
         >
           <template v-if="widget.options.remote">{{item.label}}</template>
           <template v-else>{{widget.options.showLabel ? item.label : item.value}}</template>
@@ -192,6 +195,7 @@
         v-model="dataModel"
         :width="widget.options.width"
         :height="widget.options.height"
+        :disabled="widget.options.disabled"
       >
 
       </fm-editor>
