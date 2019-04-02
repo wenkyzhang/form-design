@@ -57,11 +57,11 @@
       >
         <el-radio
           :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
-          :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
+          :label="item.code" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index" :value="item.code" :data="item.value"
           :disabled="widget.options.disabled"
         >
           <template v-if="widget.options.remote">{{item.label}}</template>
-          <template v-else>{{widget.options.showLabel ? item.label : item.value}}</template>
+          <template v-else>{{widget.options.showLabel ? item.label : item.code}}</template>
         </el-radio>
       </el-radio-group>
     </template>
