@@ -1,7 +1,12 @@
 <template>
   <el-form-item :label="widget.name" :prop="widget.model"
                 :label-width="widget.options.labelWidth + 'px'"
-                :style="{background: widget.options.bgColor, color: widget.options.color}"
+                :style="{ background: widget.options.bgColor,
+                          color: widget.options.color,
+                          fontSize: widget.options.fontSize,
+                          fontWeight: widget.options.fontWeight?'bold' : 'normal',
+                          fontStyle: widget.options.fontIncline?'italic' : 'normal'
+                         }"
   >
     <template v-if="widget.type == 'input' && widget.options.dataVisible">
       <el-input 

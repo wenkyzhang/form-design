@@ -4,7 +4,12 @@
                   :class="{active: selectWidget.key == element.key, 'is_req': element.options.required}"
                   :label="element.name"
                   :label-width="element.options.labelWidth + 'px'"
-                  :style="{background: element.options.bgColor, color: element.options.color}"
+                  :style="{ background: element.options.bgColor,
+                            color: element.options.color,
+                            fontSize: element.options.fontSize,
+                            fontWeight: element.options.fontWeight?'bold' : 'normal',
+                            fontStyle: element.options.fontIncline?'italic' : 'normal'
+                           }"
                   @click.native.stop="handleSelectWidget(index)"
     >
         <template v-if="element.type == 'input'">
@@ -320,7 +325,7 @@
 <style lang="scss">
     .widget-view{
         .el-form-item__label {
-            color: var(--options_color);
+            color: var(--options_color) ;
 
         }
     }
