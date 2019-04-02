@@ -54,6 +54,7 @@
     <template v-if="widget.type == 'radio'">
       <el-radio-group v-model="dataModel"
         :style="{width: widget.options.width}"
+        :datasrc="JSON.stringify(widget.options.options)"
       >
         <el-radio
           :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
@@ -69,11 +70,12 @@
     <template v-if="widget.type == 'checkbox'">
       <el-checkbox-group v-model="dataModel"
         :style="{width: widget.options.width}"
+        :datasrc="JSON.stringify(widget.options.options)"
       >
         <el-checkbox
           
           :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
-          :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
+          :label="item.code" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
           :disabled="widget.options.disabled"
         >
           <template v-if="widget.options.remote">{{item.label}}</template>
