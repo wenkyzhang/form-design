@@ -4,7 +4,7 @@
                   :class="{active: selectWidget.key == element.key, 'is_req': element.options.required}"
                   :label="element.name"
                   :label-width="element.options.labelWidth + 'px'"
-                  :style="{background: element.options.bgColor}"
+                  :style="{background: element.options.bgColor, color: element.options.color}"
                   @click.native.stop="handleSelectWidget(index)"
     >
         <template v-if="element.type == 'input'">
@@ -25,7 +25,9 @@
                       :style="{width: element.options.width}"
                       :disabled="element.options.disabled"
                       :placeholder="element.options.placeholder"
-            ></el-input>
+            >
+                <template slot="append" v-if="element.options.tipsVisible">{{element.options.tips}}</template>
+            </el-input>
         </template>
 
         <template v-if="element.type == 'number'">
@@ -227,6 +229,11 @@
             <i class="iconfont icon-icon_clone"></i>
         </el-button>
 
+        <template>
+            <div class="el-form-item__label" :style="{'--options_color': element.options.color}">
+            </div>
+        </template>
+
     </el-form-item>
 </template>
 
@@ -310,9 +317,12 @@
     }
 </script>
 
-<style lang="scss" scoped>
-/*    .el-form-item__label {
-        color: $element . options . color;
-        font-size: large;
-    }*/
+<style lang="scss">
+    .widget-view{
+        .el-form-item__label {
+            color: var(--options_color);
+
+        }
+    }
+
 </style>

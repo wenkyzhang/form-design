@@ -5,6 +5,7 @@ export const basicComponents = [
         icon: 'icon-input',
         options: {
             labelWidth: 100,
+            align: 'left'
         }
     },
     {

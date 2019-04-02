@@ -3,7 +3,14 @@
         <div v-if="show" id="widgetConfigDiv">
             <el-button @click="showData()">查看信息</el-button>
             <el-form label-position="left" label-width="80px">
-                <div class="widget-cate">基本属性</div>
+                <div class="widget-cate" style="font-size: smaller;">基本属性</div>
+                <div class="widget-cate" style="font-size: small;">基本属性</div>
+                <div class="widget-cate" >基本属性</div>
+                <div class="widget-cate" style="font-size: medium;">基本属性</div>
+                <div class="widget-cate" style="font-size: large;">基本属性</div>
+                <div class="widget-cate" style="font-size: larger;">基本属性</div>
+
+
                 <el-form-item label="编号">
                     <el-input v-model="data.options.id" readonly="readonly"></el-input>
                 </el-form-item>
@@ -14,8 +21,7 @@
                               v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
                     <el-input v-model="data.options.placeholder"></el-input>
                 </el-form-item>
-                <el-form-item label="提示内容"
-                              v-if="Object.keys(data.options).indexOf('tips')>=0 && (data.type!='time' || data.type!='date')">
+                <el-form-item label="提示内容">
                     <el-input v-model="data.options.tips"></el-input>
                 </el-form-item>
 
@@ -70,6 +76,13 @@
                     <el-radio-group v-model="data.options.inline">
                         <el-radio-button :label="false">块级</el-radio-button>
                         <el-radio-button :label="true">行内</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="布局方式" v-if="data.type == 'label'">
+                    <el-radio-group v-model="data.options.align">
+                        <el-radio-button :label="left">左</el-radio-button>
+                        <el-radio-button :label="middle">居中</el-radio-button>
+                        <el-radio-button :label="right">右</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
 
