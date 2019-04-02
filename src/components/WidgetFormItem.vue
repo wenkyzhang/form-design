@@ -31,7 +31,6 @@
                       :disabled="element.options.disabled"
                       :placeholder="element.options.placeholder"
             >
-                <template slot="append" v-if="element.options.tipsVisible">{{element.options.tips}}</template>
             </el-input>
         </template>
 
@@ -42,7 +41,8 @@
                     :controls-position="element.options.controlsPosition"
                     :style="{width: element.options.width}"
                     :precision="element.options.precision"
-            ></el-input-number>
+            >
+            </el-input-number>
         </template>
 
         <template v-if="element.type == 'radio'">

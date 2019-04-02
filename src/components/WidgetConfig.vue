@@ -21,7 +21,7 @@
                               v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
                     <el-input v-model="data.options.placeholder"></el-input>
                 </el-form-item>
-                <el-form-item label="提示内容">
+                <el-form-item label="提示内容" v-if="data.type == 'input'">
                     <el-input v-model="data.options.tips"></el-input>
                 </el-form-item>
 
@@ -66,10 +66,10 @@
                 <el-form-item label="不可编辑">
                     <el-switch v-model="data.options.disabled"></el-switch>
                 </el-form-item>
-                <el-form-item label="数据可见">
+                <el-form-item label="数据可见" v-if="false">  <!-- 先不可设置-->
                     <el-switch v-model="data.options.dataVisible"></el-switch>
                 </el-form-item>
-                <el-form-item label="提示可见">
+                <el-form-item label="提示可见" v-if="data.type == 'input'">
                     <el-switch v-model="data.options.tipsVisible"></el-switch>
                 </el-form-item>
                 <el-form-item label="布局方式" v-if="Object.keys(data.options).indexOf('inline')>=0">
